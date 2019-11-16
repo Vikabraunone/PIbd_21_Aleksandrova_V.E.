@@ -1,20 +1,27 @@
 import javax.swing.JPanel;
+
+import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 public class MyPanelBomber extends JPanel {
-	private Bomber _bomber;
+	Random rnd = new Random();
+	public static Bombs bombs;
+	public static WarPlane warPlane = null;
+	static Direction direction = null;
 	
 	@Override	
 	public void paint(Graphics g) {
 		super.paint(g);
-		if (_bomber != null)
-			_bomber.drawBomber(g, this.getWidth(), this.getHeight());
+		if (warPlane != null)
+		warPlane.DrawWarPlane(g);
+		if (bombs != null){
+            Color color = new Color(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
+            bombs.DrawBombs(g, CountBomb.Nine, color);
+        }
 	}
 	
 	public MyPanelBomber() {
-	}
-	
-	public void SetBomber(Bomber bomber) {
-		_bomber = bomber;
+		bombs = null;
 	}
 }
