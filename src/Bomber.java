@@ -6,16 +6,16 @@ public class Bomber extends WarPlane {
 	private boolean _isSpire;
 	private boolean _isBombs;
 	private boolean _isEmblem;
-	Bombs bombs;
+	IBombs _bombs;
 
 	public Bomber(int maxSpeed, float weight, Color mainColor, Color dopColor, boolean isSpire, boolean isBombs,
-			boolean isEmblem, Bombs bomb) {
+			boolean isEmblem, IBombs bombs) {
 		super(maxSpeed, weight, mainColor);
 		_dopColor = dopColor;
 		_isSpire = isSpire;
 		_isBombs = isBombs;
 		_isEmblem = isEmblem;
-		bombs = bomb;
+		_bombs = bombs;
 	}
 
 	public void SetDopColor(Color dopColor) {
@@ -66,8 +66,8 @@ public class Bomber extends WarPlane {
 			g.drawOval(_startPosX + 45, _startPosY + 50, 10, 10);
 		}
 		if (_isBombs) {
-			bombs.SetStartPosX(_startPosX);
-			bombs.SetStartPosY(_startPosY);
+			_bombs.SetPosition(_startPosX, _startPosY);
+			_bombs.DrawBombs(g, ((Bombs)_bombs).GetCount(), GetDopColor());
 		}
 	}
 }

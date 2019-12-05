@@ -2,33 +2,35 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public abstract class Bombs implements IBombs {
-	private int StartPosX;
-	private int StartPosY;
-	private Color Color;
-
-	public int GetStartPosX() {
-		return StartPosX;
+	protected int _startPosX;
+	protected int _startPosY;
+	private CountBombs _count;
+	
+	public CountBombs GetCount()
+    {
+		return _count;
+    }
+	
+	public Bombs() {
+		int count = (int) (Math.random() * 6 + 5);
+		if (count == 6)
+			_count = CountBombs.Six;
+		else if (count == 7)
+			_count = CountBombs.Seven;
+		else if (count == 8)
+			_count = CountBombs.Eight;
+		else if (count == 9)
+			_count = CountBombs.Nine;
+		else
+			_count = CountBombs.Ten;
 	}
-
-	public void SetStartPosX(int x) {
-		StartPosX = x;
-	}
-
-	public int GetStartPosY() {
-		return StartPosY;
-	}
-
-	public void SetStartPosY(int y) {
-		StartPosY = y;
-	}
-
-	public Color GetColor() {
-		return Color;
-	}
-
-	public void SetColor(Color color) {
-		Color = color;
-	}
-
-	public abstract void DrawBombs(Graphics g, CountBomb count, Color color);
+	
+	@Override
+	public void SetPosition(int x, int y)
+    {
+		_startPosX = x;
+		_startPosY = y;
+    }
+	
+	public abstract void DrawBombs(Graphics g, CountBombs count, Color color);
 }

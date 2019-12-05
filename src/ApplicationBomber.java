@@ -11,10 +11,10 @@ import java.awt.event.ActionEvent;
 
 public class ApplicationBomber {
 	private JFrame frameBomber;
-	JPanel panelBomber;
+	private JPanel panelBomber;
+	private ITransport warPlane;
+	private IBombs bombs;
 	Random rnd = new Random();
-	private ITransport warTransport;
-	private Bombs bombs;
 
 	/**
 	 * Launch the application.
@@ -43,13 +43,12 @@ public class ApplicationBomber {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Random rnd = new Random();
 		frameBomber = new JFrame();
 		frameBomber.setTitle("\u0411\u043E\u043C\u0431\u0430\u0440\u0434\u0438\u0440\u043E\u0432\u0449\u0438\u043A");
 		frameBomber.setBounds(100, 100, 900, 500);
 		frameBomber.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameBomber.getContentPane().setLayout(null);
-		panelBomber = new MyPanelBomber();
+		panelBomber = new MyPanelWarPlane();
 		panelBomber.setBounds(0, 0, 858, 450);
 		frameBomber.getContentPane().add(panelBomber);
 		panelBomber.setLayout(null);
@@ -58,11 +57,10 @@ public class ApplicationBomber {
 		buttonCreateWarPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				bombs = null;
-				warTransport = new WarPlane(rnd.nextInt(200) + 100, rnd.nextInt(200) + 100, new Color(0, 128, 0));
-				warTransport.SetPosition(rnd.nextInt(90) + 10, rnd.nextInt(90) + 10, panelBomber.getWidth(),
+				warPlane = new WarPlane(rnd.nextInt(200) + 100, rnd.nextInt(200) + 100, new Color(0, 128, 0));
+				warPlane.SetPosition(rnd.nextInt(90) + 10, rnd.nextInt(90) + 10, panelBomber.getWidth(),
 						panelBomber.getHeight());
-				MyPanelBomber.bombs = null;
-				MyPanelBomber.warPlane = (WarPlane) warTransport;
+				MyPanelWarPlane.warPlane = (WarPlane) warPlane;
 				panelBomber.repaint();
 			}
 		});
@@ -73,28 +71,20 @@ public class ApplicationBomber {
 				"\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0431\u043E\u043C\u0431\u0430\u0440\u0434\u0438\u0440\u043E\u0432\u0449\u0438\u043A\u0430");
 		buttonCreateBomber.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// bombs = new CircleBombs();
-				// bombs = new SquareBombs();
-				bombs = new RectangleBombs();
-				warTransport = new Bomber(rnd.nextInt(200) + 100, rnd.nextInt(200) + 100, new Color(0, 128, 0),
-						Color.yellow, true, true, true, bombs);
-				warTransport.SetPosition(rnd.nextInt(90) + 10, rnd.nextInt(90) + 10, panelBomber.getWidth(),
-						panelBomber.getHeight());
-				MyPanelBomber.bombs = bombs;
-				MyPanelBomber.warPlane = (WarPlane) warTransport;
-				Random rnd = new Random();
-				int number = 6 + rnd.nextInt(5);
-				if (number == 6)
-					MyPanelBomber.countBombs = CountBomb.Six;
-				else if (number == 7)
-					MyPanelBomber.countBombs = CountBomb.Seven;
-				else if (number == 8)
-					MyPanelBomber.countBombs = CountBomb.Eight;
-				else if (number == 9)
-					MyPanelBomber.countBombs = CountBomb.Nine;
+				int posX = rnd.nextInt(90) + 10;
+				int posY = rnd.nextInt(90) + 10;
+				int typeBombs = rnd.nextInt(3);
+				if (typeBombs == 0)
+					bombs = new CircleBombs();
+				else if (typeBombs == 1)
+					bombs = new SquareBombs();
 				else
-					MyPanelBomber.countBombs = CountBomb.Ten;
-				MyPanelBomber.colorBombs = new Color(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
+					bombs = new RectangleBombs();
+				bombs.SetPosition(posX, posY);
+				warPlane = new Bomber(rnd.nextInt(200) + 100, rnd.nextInt(200) + 100, new Color(0, 128, 0),
+						Color.yellow, true, true, true, bombs);
+				warPlane.SetPosition(posX, posY, panelBomber.getWidth(), panelBomber.getHeight());
+				MyPanelWarPlane.warPlane = (WarPlane) warPlane;
 				panelBomber.repaint();
 			}
 		});
@@ -110,7 +100,7 @@ public class ApplicationBomber {
 		panelBomber.add(buttonUp);
 		buttonUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				warTransport.MoveTransport(Direction.Up);
+				warPlane.MoveTransport(Direction.Up);
 				panelBomber.repaint();
 			}
 		});
@@ -123,7 +113,7 @@ public class ApplicationBomber {
 		panelBomber.add(buttonDown);
 		buttonDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				warTransport.MoveTransport(Direction.Down);
+				warPlane.MoveTransport(Direction.Down);
 				panelBomber.repaint();
 			}
 		});
@@ -136,7 +126,7 @@ public class ApplicationBomber {
 		panelBomber.add(buttonLeft);
 		buttonLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				warTransport.MoveTransport(Direction.Left);
+				warPlane.MoveTransport(Direction.Left);
 				panelBomber.repaint();
 			}
 		});
@@ -147,10 +137,9 @@ public class ApplicationBomber {
 		JButton buttonRight = new JButton(iconRight);
 		buttonRight.setBounds(800, 400, 30, 30);
 		panelBomber.add(buttonRight);
-
 		buttonRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				warTransport.MoveTransport(Direction.Right);
+				warPlane.MoveTransport(Direction.Right);
 				panelBomber.repaint();
 			}
 		});
