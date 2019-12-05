@@ -9,5 +9,6 @@ public class MyPanelWarPlane extends JPanel {
 		super.paint(g);
 		if (warPlane != null)
 			warPlane.DrawWarPlane(g);
+		
 	}
 }

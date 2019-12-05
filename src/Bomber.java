@@ -67,7 +67,7 @@ public class Bomber extends WarPlane {
 		}
 		if (_isBombs) {
 			_bombs.SetPosition(_startPosX, _startPosY);
-			_bombs.DrawBombs(g, ((Bombs)_bombs).GetCount(), GetDopColor());
+			_bombs.DrawBombs(g, ((Bombs) _bombs).GetCount(), GetDopColor());
 		}
 	}
 }
