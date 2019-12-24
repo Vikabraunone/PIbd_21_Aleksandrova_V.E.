@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 public class PanelHangar extends JPanel {
 	public Hangar hangar;
+	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);

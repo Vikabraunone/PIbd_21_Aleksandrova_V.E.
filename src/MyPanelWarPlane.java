@@ -3,12 +3,14 @@ import java.awt.Graphics;
 
 public class MyPanelWarPlane extends JPanel {
 	public static WarPlane warPlane = null;
+	
+	public MyPanelWarPlane() {
+	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		if (warPlane != null)
 			warPlane.DrawWarPlane(g);
-		
 	}
 }
