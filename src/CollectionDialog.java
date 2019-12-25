@@ -43,7 +43,7 @@ public class CollectionDialog extends JDialog {
 	public void ShowCollection(ArrayList<ITransport> memoryArrayList) {
 		String[] arrayWarPlane = new String[memoryArrayList.size()];
 		for (int i = 0; i < arrayWarPlane.length; i++)
-			arrayWarPlane[i] = "Индекс " + (i + 1);
+			arrayWarPlane[i] = "Индекс " + i;
 		JList JListWarPlane = new JList(arrayWarPlane);
 		JListWarPlane.setBounds(181, 11, 105, 143);
 		JListWarPlane.addListSelectionListener(new ListSelectionListener() {
