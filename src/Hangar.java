@@ -14,6 +14,11 @@ public class Hangar <T extends ITransport, V extends IBombs>{
 	private Color _color;
 	Random rnd = new Random();
 	
+	public T GetTransport(int indexTransport){
+		return _places.get(indexTransport);
+	}
+	
+	
 	public Hangar(int sizes, int pictureWidth, int pictureHeight)
     {
 		_maxCount = sizes;
