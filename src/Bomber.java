@@ -6,7 +6,7 @@ public class Bomber extends WarPlane {
 	private boolean _isSpire;
 	private boolean _isBombs;
 	private boolean _isEmblem;
-	IBombs _bombs;
+	private IBombs _bombs;
 
 	public Bomber(int maxSpeed, float weight, Color mainColor, Color dopColor, boolean isSpire, boolean isBombs,
 			boolean isEmblem, IBombs bombs) {
@@ -24,6 +24,14 @@ public class Bomber extends WarPlane {
 
 	public Color GetDopColor() {
 		return _dopColor;
+	}
+	
+	public void SetBombs(IBombs bombs) {
+		_bombs = bombs;
+	}
+	
+	public IBombs GetBombs() {
+		return _bombs;
 	}
 
 	public void SetSpire(boolean spire) {

@@ -1,15 +1,8 @@
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
 public class ListHandlerTypeBombs extends TransferHandler {
-	private JPanel panelWarPlane;
-
-	public ListHandlerTypeBombs(JPanel panel) {
-		panelWarPlane = panel;
-	}
-
 	public boolean canImport(TransferSupport support) {
 		if (!support.isDrop())
 			return false;
@@ -20,26 +13,25 @@ public class ListHandlerTypeBombs extends TransferHandler {
 		if (!canImport(support))
 			return false;
 		Transferable transferable = support.getTransferable();
+		if (WarPlaneConfigApplication.GetWarPlane() == null)
+		{
+			WarPlaneConfigApplication.ClearIndexJLists();
+			return false;
+		}
+		if (!(WarPlaneConfigApplication.GetWarPlane() instanceof Bomber))
+		{
+			WarPlaneConfigApplication.ClearIndexJLists();
+			return false;
+		}
 		try {
 			String line = (String) transferable.getTransferData(DataFlavor.stringFlavor);
 			if (line.equals("Круглые"))
-				WarPlaneConfigApplication.bombs = new CircleBombs();
+				WarPlaneConfigApplication.SetBombs(new CircleBombs());
 			else if (line.equals("Квадратные"))
-				WarPlaneConfigApplication.bombs = new SquareBombs();
+				WarPlaneConfigApplication.SetBombs(new SquareBombs());
 			else if (line.equals("Прямоугольные"))
-				WarPlaneConfigApplication.bombs = new RectangleBombs();
-			else {
-				WarPlaneConfigApplication.ClearIndexJLists();
-				return false;
-			}
-			if (!(WarPlaneConfigApplication.warPlane instanceof Bomber)) {
-				WarPlaneConfigApplication.ClearIndexJLists();
-				return false;
-			}
-			WarPlaneConfigApplication.warPlane = new Bomber(0, 0, WarPlaneConfigApplication.MainColor,
-					WarPlaneConfigApplication.DopColor, true, true, true, WarPlaneConfigApplication.bombs);
-			MyPanelWarPlane.warPlane = (WarPlane) WarPlaneConfigApplication.warPlane;
-			panelWarPlane.repaint();
+				WarPlaneConfigApplication.SetBombs(new RectangleBombs());
+			WarPlaneConfigApplication.GetPanelWarPlane().repaint();
 			WarPlaneConfigApplication.ClearIndexJLists();
 			return true;
 		} catch (Exception e) {

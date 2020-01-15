@@ -7,39 +7,36 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class WarPlaneConfigApplication {
-	JFrame frame;
+	public JFrame frame;
+	private static MyPanelWarPlane panelWarPlane;
+	private static ITransport warPlane;
 	private JPanel panelGroupConfig;
-	public static MyPanelWarPlane panelWarPlane;
 	private JPanel panelGroupMain;
 	private JPanel panelGroupColor;
 	private JPanel panelGroupCountBombs;
 	private JLabel labelConfigWarPlane;
 	private JLabel labelColor;
 	private JLabel labelTypeBombs;
-	private static JList JListMainColor;
-	private static JList JListDopColor;
-	private static JList JListWarPlane;
-	private static JList JListBomberConfig;
-	private static JList JListWarPlaneConfig;
-	private static JList JListBlack;
-	private static JList JListWhite;
-	private static JList JListGreen;
-	private static JList JListRed;
-	private static JList JListBlue;
-	private static JList JListYellow;
-	private static JList JListLightGray;
-	private static JList JListOrange;
-	private static JList JListCircleBombs;
-	private static JList JListSquareBombs;
-	private static JList JListRectangleBombs;
-	private static JList JListBombs;
-	public static ITransport warPlane;
-	public static IBombs bombs = new CircleBombs();
-	public static Color MainColor = Color.WHITE;
-	public static Color DopColor = Color.BLACK;
+	private static JList jListMainColor;
+	private static JList jListDopColor;
+	private static JList jListWarPlane;
+	private static JList jListBomberConfig;
+	private static JList jListWarPlaneConfig;
+	private static JList jListBlack;
+	private static JList jListWhite;
+	private static JList jListGreen;
+	private static JList jListRed;
+	private static JList jListBlue;
+	private static JList jListYellow;
+	private static JList jListLightGray;
+	private static JList jListOrange;
+	private static JList jListCircleBombs;
+	private static JList jListSquareBombs;
+	private static JList jListRectangleBombs;
+	private static JList jListBombs;
+	private JList jListLevels;
 	private PanelHangar panelHangar;
 	private MultiLevelHangar hangar;
-	private JList jListLevels;
 
 	/**
 	 * Launch the application.
@@ -92,21 +89,21 @@ public class WarPlaneConfigApplication {
 		labelConfigWarPlane.setBounds(10, 11, 117, 14);
 		panelGroupConfig.add(labelConfigWarPlane);
 
-		JListWarPlaneConfig = new JList(new String[] { "Военный самолёт" });
-		JListWarPlaneConfig.setBackground(SystemColor.menu);
-		JListWarPlaneConfig.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JListWarPlaneConfig.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JListWarPlaneConfig.setBounds(10, 35, 120, 20);
-		JListWarPlaneConfig.setDragEnabled(true);
-		panelGroupConfig.add(JListWarPlaneConfig);
+		jListWarPlaneConfig = new JList(new String[] { "Военный самолёт" });
+		jListWarPlaneConfig.setBackground(SystemColor.menu);
+		jListWarPlaneConfig.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListWarPlaneConfig.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jListWarPlaneConfig.setBounds(10, 35, 120, 20);
+		jListWarPlaneConfig.setDragEnabled(true);
+		panelGroupConfig.add(jListWarPlaneConfig);
 
-		JListBomberConfig = new JList(new String[] { "Бомбардировщик" });
-		JListBomberConfig.setBackground(SystemColor.menu);
-		JListBomberConfig.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JListBomberConfig.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JListBomberConfig.setBounds(10, 70, 120, 20);
-		JListBomberConfig.setDragEnabled(true);
-		panelGroupConfig.add(JListBomberConfig);
+		jListBomberConfig = new JList(new String[] { "Бомбардировщик" });
+		jListBomberConfig.setBackground(SystemColor.menu);
+		jListBomberConfig.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListBomberConfig.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jListBomberConfig.setBounds(10, 70, 120, 20);
+		jListBomberConfig.setDragEnabled(true);
+		panelGroupConfig.add(jListBomberConfig);
 
 		panelGroupMain = new JPanel();
 		panelGroupMain.setBorder(new LineBorder(SystemColor.activeCaptionBorder));
@@ -120,35 +117,35 @@ public class WarPlaneConfigApplication {
 		panelWarPlane.setLayout(null);
 		panelGroupMain.add(panelWarPlane);
 
-		JListWarPlane = new JList();
-		JListWarPlane.setBounds(10, 11, 112, 78);
-		JListWarPlane.setOpaque(false);
-		JListWarPlane.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JListWarPlane.setTransferHandler(new ListHandlerWarPlane(panelWarPlane));
-		panelWarPlane.add(JListWarPlane);
+		jListWarPlane = new JList();
+		jListWarPlane.setBounds(10, 11, 112, 78);
+		jListWarPlane.setOpaque(false);
+		jListWarPlane.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListWarPlane.setTransferHandler(new ListHandlerWarPlane());
+		panelWarPlane.add(jListWarPlane);
 
-		JListMainColor = new JList(new String[] { "Основной цвет" });
-		JListMainColor.setBackground(SystemColor.menu);
-		JListMainColor.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JListMainColor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JListMainColor.setBounds(20, 122, 97, 20);
-		JListMainColor.setTransferHandler(new ListHandlerMainColor(panelWarPlane));
-		panelGroupMain.add(JListMainColor);
+		jListMainColor = new JList(new String[] { "Основной цвет" });
+		jListMainColor.setBackground(SystemColor.menu);
+		jListMainColor.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jListMainColor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListMainColor.setBounds(20, 122, 97, 20);
+		jListMainColor.setTransferHandler(new ListHandlerMainColor());
+		panelGroupMain.add(jListMainColor);
 
-		JListDopColor = new JList(new String[] { "Доп. цвет" });
-		JListDopColor.setBackground(SystemColor.menu);
-		JListDopColor.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JListDopColor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JListDopColor.setBounds(20, 153, 97, 20);
-		JListDopColor.setTransferHandler(new ListHandlerDopColor(panelWarPlane));
-		panelGroupMain.add(JListDopColor);
+		jListDopColor = new JList(new String[] { "Доп. цвет" });
+		jListDopColor.setBackground(SystemColor.menu);
+		jListDopColor.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jListDopColor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListDopColor.setBounds(20, 153, 97, 20);
+		jListDopColor.setTransferHandler(new ListHandlerDopColor());
+		panelGroupMain.add(jListDopColor);
 
-		JListBombs = new JList(new String[] { "Бомбы" });
-		JListBombs.setBackground(SystemColor.menu);
-		JListBombs.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JListBombs.setBounds(20, 184, 97, 20);
-		JListBombs.setTransferHandler(new ListHandlerTypeBombs(panelWarPlane));
-		panelGroupMain.add(JListBombs);
+		jListBombs = new JList(new String[] { "Бомбы" });
+		jListBombs.setBackground(SystemColor.menu);
+		jListBombs.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jListBombs.setBounds(20, 184, 97, 20);
+		jListBombs.setTransferHandler(new ListHandlerTypeBombs());
+		panelGroupMain.add(jListBombs);
 
 		panelGroupColor = new JPanel();
 		panelGroupColor.setBorder(new LineBorder(new Color(192, 192, 192)));
@@ -161,68 +158,68 @@ public class WarPlaneConfigApplication {
 		labelColor.setBounds(10, 11, 46, 14);
 		panelGroupColor.add(labelColor);
 
-		JListBlack = new JList(new String[] { "Black" });
-		JListBlack.setForeground(Color.BLACK);
-		JListBlack.setBackground(Color.BLACK);
-		JListBlack.setBounds(10, 45, 30, 30);
-		JListBlack.setDragEnabled(true);
-		panelGroupColor.add(JListBlack);
+		jListBlack = new JList(new String[] { "Black" });
+		jListBlack.setForeground(Color.BLACK);
+		jListBlack.setBackground(Color.BLACK);
+		jListBlack.setBounds(10, 45, 30, 30);
+		jListBlack.setDragEnabled(true);
+		panelGroupColor.add(jListBlack);
 
-		JListWhite = new JList(new String[] { "White" });
-		JListWhite.setBorder(new LineBorder(Color.DARK_GRAY));
-		JListWhite.setForeground(Color.WHITE);
-		JListWhite.setBackground(Color.WHITE);
-		JListWhite.setBounds(50, 45, 30, 30);
-		JListWhite.setDragEnabled(true);
-		panelGroupColor.add(JListWhite);
+		jListWhite = new JList(new String[] { "White" });
+		jListWhite.setBorder(new LineBorder(Color.DARK_GRAY));
+		jListWhite.setForeground(Color.WHITE);
+		jListWhite.setBackground(Color.WHITE);
+		jListWhite.setBounds(50, 45, 30, 30);
+		jListWhite.setDragEnabled(true);
+		panelGroupColor.add(jListWhite);
 
-		JListGreen = new JList(new String[] { "Green" });
-		JListGreen.setBorder(new LineBorder(Color.GREEN));
-		JListGreen.setForeground(Color.GREEN);
-		JListGreen.setBackground(Color.GREEN);
-		JListGreen.setBounds(10, 86, 30, 30);
-		JListGreen.setDragEnabled(true);
-		panelGroupColor.add(JListGreen);
+		jListGreen = new JList(new String[] { "Green" });
+		jListGreen.setBorder(new LineBorder(Color.GREEN));
+		jListGreen.setForeground(Color.GREEN);
+		jListGreen.setBackground(Color.GREEN);
+		jListGreen.setBounds(10, 86, 30, 30);
+		jListGreen.setDragEnabled(true);
+		panelGroupColor.add(jListGreen);
 
-		JListRed = new JList(new String[] { "Red" });
-		JListRed.setBorder(new LineBorder(Color.DARK_GRAY));
-		JListRed.setForeground(Color.RED);
-		JListRed.setBackground(Color.RED);
-		JListRed.setBounds(50, 86, 30, 30);
-		JListRed.setDragEnabled(true);
-		panelGroupColor.add(JListRed);
+		jListRed = new JList(new String[] { "Red" });
+		jListRed.setBorder(new LineBorder(Color.DARK_GRAY));
+		jListRed.setForeground(Color.RED);
+		jListRed.setBackground(Color.RED);
+		jListRed.setBounds(50, 86, 30, 30);
+		jListRed.setDragEnabled(true);
+		panelGroupColor.add(jListRed);
 
-		JListBlue = new JList(new String[] { "Blue" });
-		JListBlue.setBorder(new LineBorder(Color.DARK_GRAY));
-		JListBlue.setBackground(Color.BLUE);
-		JListBlue.setForeground(Color.BLUE);
-		JListBlue.setBounds(10, 127, 30, 30);
-		JListBlue.setDragEnabled(true);
-		panelGroupColor.add(JListBlue);
+		jListBlue = new JList(new String[] { "Blue" });
+		jListBlue.setBorder(new LineBorder(Color.DARK_GRAY));
+		jListBlue.setBackground(Color.BLUE);
+		jListBlue.setForeground(Color.BLUE);
+		jListBlue.setBounds(10, 127, 30, 30);
+		jListBlue.setDragEnabled(true);
+		panelGroupColor.add(jListBlue);
 
-		JListYellow = new JList(new String[] { "Yellow" });
-		JListYellow.setBorder(new LineBorder(Color.DARK_GRAY));
-		JListYellow.setBackground(Color.YELLOW);
-		JListYellow.setForeground(Color.YELLOW);
-		JListYellow.setBounds(50, 127, 30, 30);
-		JListYellow.setDragEnabled(true);
-		panelGroupColor.add(JListYellow);
+		jListYellow = new JList(new String[] { "Yellow" });
+		jListYellow.setBorder(new LineBorder(Color.DARK_GRAY));
+		jListYellow.setBackground(Color.YELLOW);
+		jListYellow.setForeground(Color.YELLOW);
+		jListYellow.setBounds(50, 127, 30, 30);
+		jListYellow.setDragEnabled(true);
+		panelGroupColor.add(jListYellow);
 
-		JListLightGray = new JList(new String[] { "Gray" });
-		JListLightGray.setBorder(new LineBorder(Color.DARK_GRAY));
-		JListLightGray.setBackground(Color.LIGHT_GRAY);
-		JListLightGray.setForeground(Color.LIGHT_GRAY);
-		JListLightGray.setBounds(10, 168, 30, 30);
-		JListLightGray.setDragEnabled(true);
-		panelGroupColor.add(JListLightGray);
+		jListLightGray = new JList(new String[] { "Gray" });
+		jListLightGray.setBorder(new LineBorder(Color.DARK_GRAY));
+		jListLightGray.setBackground(Color.LIGHT_GRAY);
+		jListLightGray.setForeground(Color.LIGHT_GRAY);
+		jListLightGray.setBounds(10, 168, 30, 30);
+		jListLightGray.setDragEnabled(true);
+		panelGroupColor.add(jListLightGray);
 
-		JListOrange = new JList(new String[] { "Orange" });
-		JListOrange.setBorder(new LineBorder(Color.DARK_GRAY));
-		JListOrange.setBackground(Color.ORANGE);
-		JListOrange.setForeground(Color.ORANGE);
-		JListOrange.setBounds(50, 169, 30, 30);
-		JListOrange.setDragEnabled(true);
-		panelGroupColor.add(JListOrange);
+		jListOrange = new JList(new String[] { "Orange" });
+		jListOrange.setBorder(new LineBorder(Color.DARK_GRAY));
+		jListOrange.setBackground(Color.ORANGE);
+		jListOrange.setForeground(Color.ORANGE);
+		jListOrange.setBounds(50, 169, 30, 30);
+		jListOrange.setDragEnabled(true);
+		panelGroupColor.add(jListOrange);
 
 		panelGroupCountBombs = new JPanel();
 		panelGroupCountBombs.setBorder(new LineBorder(new Color(192, 192, 192)));
@@ -235,33 +232,33 @@ public class WarPlaneConfigApplication {
 		labelTypeBombs.setBounds(10, 11, 84, 16);
 		panelGroupCountBombs.add(labelTypeBombs);
 
-		JListCircleBombs = new JList(new String[] { "Круглые" });
-		JListCircleBombs.setBackground(SystemColor.menu);
-		JListCircleBombs.setBounds(10, 38, 112, 20);
-		JListCircleBombs.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JListCircleBombs.setDragEnabled(true);
-		panelGroupCountBombs.add(JListCircleBombs);
+		jListCircleBombs = new JList(new String[] { "Круглые" });
+		jListCircleBombs.setBackground(SystemColor.menu);
+		jListCircleBombs.setBounds(10, 38, 112, 20);
+		jListCircleBombs.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jListCircleBombs.setDragEnabled(true);
+		panelGroupCountBombs.add(jListCircleBombs);
 
-		JListSquareBombs = new JList(new String[] { "Квадратные" });
-		JListSquareBombs.setBackground(SystemColor.menu);
-		JListSquareBombs.setBounds(10, 64, 112, 20);
-		JListSquareBombs.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JListSquareBombs.setDragEnabled(true);
-		panelGroupCountBombs.add(JListSquareBombs);
+		jListSquareBombs = new JList(new String[] { "Квадратные" });
+		jListSquareBombs.setBackground(SystemColor.menu);
+		jListSquareBombs.setBounds(10, 64, 112, 20);
+		jListSquareBombs.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jListSquareBombs.setDragEnabled(true);
+		panelGroupCountBombs.add(jListSquareBombs);
 
-		JListRectangleBombs = new JList(new String[] { "Прямоугольные" });
-		JListRectangleBombs.setBackground(SystemColor.menu);
-		JListRectangleBombs.setBounds(10, 88, 112, 20);
-		JListRectangleBombs.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JListRectangleBombs.setDragEnabled(true);
-		panelGroupCountBombs.add(JListRectangleBombs);
+		jListRectangleBombs = new JList(new String[] { "Прямоугольные" });
+		jListRectangleBombs.setBackground(SystemColor.menu);
+		jListRectangleBombs.setBounds(10, 88, 112, 20);
+		jListRectangleBombs.setBorder(new LineBorder(new Color(0, 0, 0)));
+		jListRectangleBombs.setDragEnabled(true);
+		panelGroupCountBombs.add(jListRectangleBombs);
 
 		JButton buttonAdd = new JButton("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
 		buttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (warPlane != null) {
 					hangar.GetHangar(jListLevels.getSelectedIndex()).operatorAdd(warPlane);
-					MyPanelWarPlane.warPlane = (WarPlane) warPlane;
+					panelWarPlane.SetWarPlane(warPlane);
 					panelHangar.repaint();
 				}
 				frame.dispose();
@@ -281,22 +278,60 @@ public class WarPlaneConfigApplication {
 	}
 
 	public static void ClearIndexJLists() {
-		JListMainColor.clearSelection();
-		JListDopColor.clearSelection();
-		JListWarPlane.clearSelection();
-		JListBomberConfig.clearSelection();
-		JListWarPlaneConfig.clearSelection();
-		JListBlack.clearSelection();
-		JListWhite.clearSelection();
-		JListGreen.clearSelection();
-		JListRed.clearSelection();
-		JListBlue.clearSelection();
-		JListYellow.clearSelection();
-		JListLightGray.clearSelection();
-		JListOrange.clearSelection();
-		JListCircleBombs.clearSelection();
-		JListSquareBombs.clearSelection();
-		JListRectangleBombs.clearSelection();
-		JListBombs.clearSelection();
+		jListMainColor.clearSelection();
+		jListDopColor.clearSelection();
+		jListWarPlane.clearSelection();
+		jListBomberConfig.clearSelection();
+		jListWarPlaneConfig.clearSelection();
+		jListBlack.clearSelection();
+		jListWhite.clearSelection();
+		jListGreen.clearSelection();
+		jListRed.clearSelection();
+		jListBlue.clearSelection();
+		jListYellow.clearSelection();
+		jListLightGray.clearSelection();
+		jListOrange.clearSelection();
+		jListCircleBombs.clearSelection();
+		jListSquareBombs.clearSelection();
+		jListRectangleBombs.clearSelection();
+		jListBombs.clearSelection();
+	}
+
+	public static MyPanelWarPlane GetPanelWarPlane() {
+		// обновить данные
+		panelWarPlane.SetWarPlane(warPlane);
+		return panelWarPlane;
+	}
+
+	public static ITransport GetWarPlane() {
+		return warPlane;
+	}
+
+	public static void SetWarPlane(ITransport transport) {
+		warPlane = transport;
+	}
+
+	public static IBombs GetBombs() {
+		return ((Bomber) warPlane).GetBombs();
+	}
+
+	public static void SetBombs(IBombs bombs) {
+		((Bomber) warPlane).SetBombs(bombs);
+	}
+
+	public static Color GetMainColor() {
+		return ((WarPlane) warPlane).GetMainColor();
+	}
+
+	public static void SetMainColor(Color color) {
+		((WarPlane) warPlane).SetMainColor(color);
+	}
+
+	public static Color GetDopColor() {
+		return ((Bomber) warPlane).GetDopColor();
+	}
+
+	public static void SetDopColor(Color color) {
+		((Bomber) warPlane).SetDopColor(color);
 	}
 }

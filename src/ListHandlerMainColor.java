@@ -4,12 +4,6 @@ import java.awt.datatransfer.Transferable;
 import javax.swing.TransferHandler;
 
 public class ListHandlerMainColor extends TransferHandler {
-	private MyPanelWarPlane panelWarPlane;
-
-	public ListHandlerMainColor(MyPanelWarPlane panel) {
-		panelWarPlane = panel;
-	}
-
 	public boolean canImport(TransferSupport support) {
 		if (!support.isDrop())
 			return false;
@@ -20,39 +14,29 @@ public class ListHandlerMainColor extends TransferHandler {
 		if (!canImport(support))
 			return false;
 		Transferable transferable = support.getTransferable();
-		if (WarPlaneConfigApplication.warPlane == null) {
+		if (WarPlaneConfigApplication.GetWarPlane() == null) {
 			WarPlaneConfigApplication.ClearIndexJLists();
 			return false;
 		}
 		try {
 			String line = (String) transferable.getTransferData(DataFlavor.stringFlavor);
 			if (line.equals("Black"))
-				WarPlaneConfigApplication.MainColor = Color.BLACK;
+				WarPlaneConfigApplication.SetMainColor(Color.BLACK);
 			else if (line.equals("White"))
-				WarPlaneConfigApplication.MainColor = Color.WHITE;
+				WarPlaneConfigApplication.SetMainColor(Color.WHITE);
 			else if (line.equals("Green"))
-				WarPlaneConfigApplication.MainColor = Color.GREEN;
+				WarPlaneConfigApplication.SetMainColor(Color.GREEN);
 			else if (line.equals("Red"))
-				WarPlaneConfigApplication.MainColor = Color.RED;
+				WarPlaneConfigApplication.SetMainColor(Color.RED);
 			else if (line.equals("Blue"))
-				WarPlaneConfigApplication.MainColor = Color.BLUE;
+				WarPlaneConfigApplication.SetMainColor(Color.BLUE);
 			else if (line.equals("Yellow"))
-				WarPlaneConfigApplication.MainColor = Color.YELLOW;
+				WarPlaneConfigApplication.SetMainColor(Color.YELLOW);
 			else if (line.equals("Gray"))
-				WarPlaneConfigApplication.MainColor = Color.LIGHT_GRAY;
+				WarPlaneConfigApplication.SetMainColor(Color.LIGHT_GRAY);
 			else if (line.equals("Orange"))
-				WarPlaneConfigApplication.MainColor = Color.ORANGE;
-			else {
-				WarPlaneConfigApplication.ClearIndexJLists();
-				return false;
-			}
-			if (WarPlaneConfigApplication.warPlane instanceof Bomber)
-				WarPlaneConfigApplication.warPlane = new Bomber(0, 0, WarPlaneConfigApplication.MainColor,
-						WarPlaneConfigApplication.DopColor, true, true, true, WarPlaneConfigApplication.bombs);
-			else
-				WarPlaneConfigApplication.warPlane = new WarPlane(0, 0, WarPlaneConfigApplication.MainColor);
-			MyPanelWarPlane.warPlane = (WarPlane) WarPlaneConfigApplication.warPlane;
-			panelWarPlane.repaint();
+				WarPlaneConfigApplication.SetMainColor(Color.ORANGE);
+			WarPlaneConfigApplication.GetPanelWarPlane().repaint();
 			WarPlaneConfigApplication.ClearIndexJLists();
 			return true;
 		} catch (Exception e) {

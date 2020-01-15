@@ -1,16 +1,9 @@
 import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
 public class ListHandlerDopColor extends TransferHandler {
-	private JPanel panelWarPlane;
-
-	public ListHandlerDopColor(JPanel panel) {
-		panelWarPlane = panel;
-	}
-
 	public boolean canImport(TransferSupport support) {
 		if (!support.isDrop())
 			return false;
@@ -21,12 +14,12 @@ public class ListHandlerDopColor extends TransferHandler {
 		if (!canImport(support))
 			return false;
 		Transferable transferable = support.getTransferable();
-		if (WarPlaneConfigApplication.warPlane == null)
+		if (WarPlaneConfigApplication.GetWarPlane() == null)
 		{
 			WarPlaneConfigApplication.ClearIndexJLists();
 			return false;
 		}
-		if (!(WarPlaneConfigApplication.warPlane instanceof Bomber))
+		if (!(WarPlaneConfigApplication.GetWarPlane() instanceof Bomber))
 		{
 			WarPlaneConfigApplication.ClearIndexJLists();
 			return false;
@@ -34,29 +27,22 @@ public class ListHandlerDopColor extends TransferHandler {
 		try {
 			String line = (String) transferable.getTransferData(DataFlavor.stringFlavor);
 			if (line.equals("Black"))
-				WarPlaneConfigApplication.DopColor = Color.BLACK;
+				WarPlaneConfigApplication.SetDopColor(Color.BLACK);
 			else if (line.equals("White"))
-				WarPlaneConfigApplication.DopColor = Color.WHITE;
+				WarPlaneConfigApplication.SetDopColor(Color.WHITE);
 			else if (line.equals("Green"))
-				WarPlaneConfigApplication.DopColor = Color.GREEN;
+				WarPlaneConfigApplication.SetDopColor(Color.GREEN);
 			else if (line.equals("Red"))
-				WarPlaneConfigApplication.DopColor = Color.RED;
+				WarPlaneConfigApplication.SetDopColor(Color.RED);
 			else if (line.equals("Blue"))
-				WarPlaneConfigApplication.DopColor = Color.BLUE;
+				WarPlaneConfigApplication.SetDopColor(Color.BLUE);
 			else if (line.equals("Yellow"))
-				WarPlaneConfigApplication.DopColor = Color.YELLOW;
+				WarPlaneConfigApplication.SetDopColor(Color.YELLOW);
 			else if (line.equals("Gray"))
-				WarPlaneConfigApplication.DopColor = Color.LIGHT_GRAY;
+				WarPlaneConfigApplication.SetDopColor(Color.LIGHT_GRAY);
 			else if (line.equals("Orange"))
-				WarPlaneConfigApplication.DopColor = Color.ORANGE;
-			else {
-				WarPlaneConfigApplication.ClearIndexJLists();
-				return false;
-			}
-			WarPlaneConfigApplication.warPlane = new Bomber(0, 0, WarPlaneConfigApplication.MainColor,
-					WarPlaneConfigApplication.DopColor, true, true, true, WarPlaneConfigApplication.bombs);
-			MyPanelWarPlane.warPlane = (WarPlane) WarPlaneConfigApplication.warPlane;
-			panelWarPlane.repaint();
+				WarPlaneConfigApplication.SetDopColor(Color.ORANGE);
+			WarPlaneConfigApplication.GetPanelWarPlane().repaint();
 			WarPlaneConfigApplication.ClearIndexJLists();
 			return true;
 		} catch (Exception e) {
