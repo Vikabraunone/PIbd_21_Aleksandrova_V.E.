@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.ListSelectionModel;
@@ -9,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class CollectionDialog extends JDialog {
-	private JPanel panelWarPlane;
+	private MyPanelWarPlane panelWarPlane;
 
 	/**
 	 * Launch the application.
@@ -48,7 +47,7 @@ public class CollectionDialog extends JDialog {
 		JListWarPlane.setBounds(181, 11, 105, 143);
 		JListWarPlane.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				MyPanelWarPlane.warPlane = (WarPlane) memoryArrayList.get(JListWarPlane.getSelectedIndex());
+				panelWarPlane.SetWarPlane(memoryArrayList.get(JListWarPlane.getSelectedIndex()));
 				panelWarPlane.repaint();
 			}
 		});

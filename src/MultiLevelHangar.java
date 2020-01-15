@@ -23,7 +23,7 @@ public class MultiLevelHangar {
 	public ITransport GetTransport(int level, int indexTransport) {
 		if (level > -1 && level < hangarStages.size())
 			if (indexTransport > -1 && indexTransport < countPlaces)
-				return hangarStages.get(level)._places.get(indexTransport);
+				return GetHangar(level).GetTransport(indexTransport);
 		return null;
 	}
 }

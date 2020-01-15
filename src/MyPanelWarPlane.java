@@ -2,9 +2,10 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 
 public class MyPanelWarPlane extends JPanel {
-	public static WarPlane warPlane = null;
+	private ITransport warPlane = null;
 	
-	public MyPanelWarPlane() {
+	public void SetWarPlane(ITransport warPlane) {
+		this.warPlane = warPlane;
 	}
 
 	@Override

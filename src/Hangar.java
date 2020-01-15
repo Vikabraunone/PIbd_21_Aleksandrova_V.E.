@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class Hangar <T extends ITransport, V extends IBombs>{
-	Map<Integer,T> _places;
+	private Map<Integer,T> _places;
 	private int pictureWidth;
 	private int pictureHeight;
 	private int _maxCount;
@@ -13,6 +13,11 @@ public class Hangar <T extends ITransport, V extends IBombs>{
 	private final int _placeSizeHeight = 90;
 	private Color _color;
 	Random rnd = new Random();
+	
+	public T GetTransport(int indexTransport){
+		return _places.get(indexTransport);
+	}
+	
 	
 	public Hangar(int sizes, int pictureWidth, int pictureHeight)
     {

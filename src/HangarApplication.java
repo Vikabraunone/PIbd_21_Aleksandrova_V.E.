@@ -24,7 +24,7 @@ public class HangarApplication {
 	private JFrame frameHangar;
 	private JTextField textFieldPlace;
 	private PanelHangar panelHangar;
-	private JPanel panelTakeWarPlane;
+	private MyPanelWarPlane panelTakeWarPlane;
 	private JList JListLevels;
 	public static Color mainColor;
 	public static Color dopColor;
@@ -70,7 +70,7 @@ public class HangarApplication {
 		panelHangar.setBounds(10, 11, 850, 470);
 		frameHangar.getContentPane().add(panelHangar);
 		hangar = new MultiLevelHangar(countLevel, panelHangar.getWidth(), panelHangar.getHeight());
-		panelHangar.hangar = hangar.GetHangar(0);
+		panelHangar.SetHangar(hangar.GetHangar(0));
 		JLabel labelPlace = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
 		labelPlace.setBounds(912, 199, 59, 23);
 		frameHangar.getContentPane().add(labelPlace);
@@ -90,7 +90,7 @@ public class HangarApplication {
 		JListLevels = new JList(masLevels);
 		JListLevels.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				panelHangar.hangar = hangar.GetHangar(JListLevels.getSelectedIndex());
+				panelHangar.SetHangar(hangar.GetHangar(JListLevels.getSelectedIndex()));
 				panelHangar.repaint();
 			}
 		});
@@ -185,7 +185,7 @@ public class HangarApplication {
 						warPlane.SetPosition(10, 10, panelTakeWarPlane.getWidth(), panelTakeWarPlane.getHeight());
 						memoryArrayList.add(warPlane);
 					}
-					MyPanelWarPlane.warPlane = (WarPlane) warPlane;
+					panelTakeWarPlane.SetWarPlane(warPlane);
 					panelTakeWarPlane.repaint();
 					panelHangar.repaint();
 				}
