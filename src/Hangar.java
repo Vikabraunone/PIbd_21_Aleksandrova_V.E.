@@ -12,7 +12,6 @@ public class Hangar <T extends ITransport, V extends IBombs>{
 	private final int _placeSizeWidth = 210;
 	private final int _placeSizeHeight = 90;
 	private Color _color;
-	Random rnd = new Random();
 	
 	public Hangar(int sizes, int pictureWidth, int pictureHeight)
     {
@@ -26,19 +25,19 @@ public class Hangar <T extends ITransport, V extends IBombs>{
 		return _places.get(indexTransport);
 	}
     
-	public int operatorAdd(T warPlane)
-    {
+	public int operatorAdd(T warPlane) {
 		if (_places.size() == _maxCount)
-			 return -1;
-        for(int i = 0; i < _maxCount; i++)
-        	if (CheckFreePlace(i))
-            {
-        		warPlane.SetPosition(5 + i / 5 * _placeSizeWidth + 5, i % 5 * _placeSizeHeight + 15, pictureWidth, pictureHeight);
-                _places.put(i, warPlane);
-                return i;
-            }
-        return -1;
-    }
+			return -1;
+		for (int i = 0; i < _maxCount; i++)
+			if (CheckFreePlace(i)) 
+			{
+				warPlane.SetPosition(5 + i / 5 * _placeSizeWidth + 5, i % 5 * _placeSizeHeight + 15, pictureWidth,
+						pictureHeight);
+				_places.put(i, warPlane);
+				return i;
+			}
+		return -1;
+	}
 
 	public T operatorSub(int index)
     {
@@ -60,9 +59,7 @@ public class Hangar <T extends ITransport, V extends IBombs>{
             T warPlane = _places.get(index);
             if (!(warPlane instanceof Bomber))
             {
-            	int posX = rnd.nextInt(90) + 10;
-				int posY = rnd.nextInt(90) + 10;
-				int typeBombs = rnd.nextInt(3);
+				int typeBombs = new Random().nextInt(3);
 				IBombs bombs;
 				if (typeBombs == 0)
 					bombs = new CircleBombs();
@@ -132,5 +129,21 @@ public class Hangar <T extends ITransport, V extends IBombs>{
         if (!CheckFreePlace(index))
             if (!(_places.get(index) instanceof Bomber))
             	_color = color;
+    }
+    
+    public T GetHangar(int ind)
+    {
+    	if (_places.containsKey(ind))
+            return _places.get(ind);
+        return null;
+    }
+    
+    public void AddWarPlane(int ind, T value)
+    {
+		if (CheckFreePlace(ind)) {
+			_places.put(ind, value);
+			_places.get(ind).SetPosition(5 + ind / 5 * _placeSizeWidth + 5, ind % 5 * _placeSizeHeight + 15,
+					pictureWidth, pictureHeight);
+		}
     }
 }

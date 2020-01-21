@@ -5,6 +5,10 @@ public class SquareBombs extends Bombs {
 	public SquareBombs() {
 		super();
 	}
+	
+	public SquareBombs(int count) {
+		super(count);
+	}
 
 	@Override
 	public void DrawBombs(Graphics g, CountBombs countBombs, Color color) {
@@ -50,5 +54,10 @@ public class SquareBombs extends Bombs {
 			g.drawRect( _startPosX + 20,  _startPosY + 40, 10, 10);
 			i++;
 		}
+	}
+	
+	@Override
+    public String toString() {
+		return "SquareBombs" + ";" + GetIntCount();
 	}
 }

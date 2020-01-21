@@ -44,7 +44,7 @@ public class ApplicationBomber {
 	private void initialize() {
 		frameBomber = new JFrame();
 		frameBomber.setTitle("\u0411\u043E\u043C\u0431\u0430\u0440\u0434\u0438\u0440\u043E\u0432\u0449\u0438\u043A");
-		frameBomber.setBounds(100, 100, 900, 500);
+		frameBomber.setBounds(100, 100, 1153, 523);
 		frameBomber.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameBomber.getContentPane().setLayout(null);
 		panelWarPlane = new MyPanelWarPlane();

@@ -11,6 +11,7 @@ public class PanelHangar extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		if (hangar !=null)
 		hangar.Draw(g);
 	}
 }

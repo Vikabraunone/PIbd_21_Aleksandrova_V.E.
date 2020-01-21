@@ -6,10 +6,11 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,21 +18,24 @@ import javax.swing.ListSelectionModel;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class HangarApplication {
 	private JFrame frameHangar;
-	private JTextField textFieldPlace;
 	private PanelHangar panelHangar;
+	private JTextField textFieldPlace;
 	private MyPanelWarPlane panelTakeWarPlane;
-	private JList JListLevels;
-	public static Color mainColor;
-	public static Color dopColor;
-	private static ArrayList<ITransport> memoryArrayList = new ArrayList<ITransport>();
-	Random rnd = new Random();
-	MultiLevelHangar hangar;
-	ITransport warPlane;
+	private JList<String> JListLevels;
+	public Color mainColor;
+	public Color dopColor;
+	private ArrayList<ITransport> memoryArrayList = new ArrayList<ITransport>();
+	private MultiLevelHangar hangar;
+	private ITransport warPlane;
 	private final int countLevel = 5;
 
 	/**
@@ -63,14 +67,13 @@ public class HangarApplication {
 	private void initialize() {
 		frameHangar = new JFrame();
 		frameHangar.setTitle("\u0410\u043D\u0433\u0430\u0440");
-		frameHangar.setBounds(100, 100, 1153, 523);
-		frameHangar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameHangar.setBounds(100, 100, 1100, 550);
 		frameHangar.getContentPane().setLayout(null);
 		panelHangar = new PanelHangar();
 		panelHangar.setBounds(10, 11, 850, 470);
-		frameHangar.getContentPane().add(panelHangar);
 		hangar = new MultiLevelHangar(countLevel, panelHangar.getWidth(), panelHangar.getHeight());
 		panelHangar.SetHangar(hangar.GetHangar(0));
+		frameHangar.getContentPane().add(panelHangar);
 		JLabel labelPlace = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
 		labelPlace.setBounds(912, 199, 59, 23);
 		frameHangar.getContentPane().add(labelPlace);
@@ -181,5 +184,63 @@ public class HangarApplication {
 		});
 		buttonShowCollection.setBounds(912, 440, 112, 23);
 		frameHangar.getContentPane().add(buttonShowCollection);
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 100, 40);
+		JMenu fileMenu = new JMenu("Файл");
+		menuBar.add(fileMenu);
+		JMenuItem loadMenu = new JMenuItem("Загрузить игру");
+		fileMenu.add(loadMenu);
+		JMenuItem saveMenu = new JMenuItem("Сохранить игру");
+		fileMenu.add(saveMenu);
+		JMenuItem loadLevelMenu = new JMenuItem("Загрузить уровень");
+		fileMenu.add(loadLevelMenu);
+		JMenuItem saveLevelMenu = new JMenuItem("Сохранить уровень");
+		fileMenu.add(saveLevelMenu);
+		frameHangar.setJMenuBar(menuBar);
+		loadMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileopen = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TXT", "*.*");
+				fileopen.setFileFilter(filter);
+				int ret = fileopen.showDialog(null, "Открыть файл");
+				if (ret == JFileChooser.APPROVE_OPTION)
+					hangar.LoadData(fileopen.getSelectedFile());
+				panelHangar.SetHangar(hangar.GetHangar(JListLevels.getSelectedIndex()));
+				panelHangar.repaint();
+			}
+		});
+		saveMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					JFileChooser fileopen = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TXT", "*.*");
+					fileopen.setFileFilter(filter);
+					int ret = fileopen.showDialog(null, "Сохранить файл");
+					if (ret == JFileChooser.APPROVE_OPTION)
+						hangar.SaveFile(fileopen.getSelectedFile());
+			}
+		});
+		loadLevelMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileopen = new JFileChooser();
+				int ret = fileopen.showDialog(null, "Открыть файл");
+				if (ret == JFileChooser.APPROVE_OPTION)
+					hangar.LoadLevelData(fileopen.getSelectedFile());
+				panelHangar.SetHangar(hangar.GetHangar(JListLevels.getSelectedIndex()));
+				panelHangar.repaint();
+			}
+		});
+		saveLevelMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileopen = new JFileChooser();
+				int ret = fileopen.showDialog(null, "Сохранить файл");
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					File file = fileopen.getSelectedFile();
+					file = new File(file.toString() + ".txt");
+					hangar.SaveLevelFile(file, JListLevels.getSelectedIndex());
+					panelHangar.SetHangar(hangar.GetHangar(JListLevels.getSelectedIndex()));
+					panelHangar.repaint();
+				}
+			}
+		});
 	}
 }

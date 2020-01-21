@@ -5,6 +5,17 @@ public class WarPlane extends AirTransport {
 	protected final int warPlaneWidth = 100;
 	protected final int warPlaneHeight = 80;
 
+    public WarPlane(String info)
+    {
+        String[] strs = info.split(";");
+        if (strs.length == 3)
+        {
+        	SetMaxSpeed(Integer.parseInt(strs[0]));
+    		SetWeight(Float.parseFloat(strs[1]));
+    		SetMainColor(new Color(Integer.parseInt(strs[2])));
+        }
+    }
+	
 	public WarPlane(int maxSpeed, float weight, Color mainColor) {
 		SetMaxSpeed(maxSpeed);
 		SetWeight(weight);
@@ -73,4 +84,9 @@ public class WarPlane extends AirTransport {
 			break;
 		}
 	}
+	
+	@Override
+    public String toString() {
+        return GetMaxSpeed() + ";" + GetWeight() + ";" + GetMainColor().getRGB();
+    }
 }

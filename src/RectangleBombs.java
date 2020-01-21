@@ -5,6 +5,10 @@ public class RectangleBombs extends Bombs {
 	public RectangleBombs() {
 		super();
 	}
+	
+	public RectangleBombs(int count) {
+		super(count);
+	}
 
 	@Override
 	public void DrawBombs(Graphics g, CountBombs countBombs, Color color) {
@@ -50,5 +54,10 @@ public class RectangleBombs extends Bombs {
 			g.drawRect(_startPosX + 20, _startPosY + 40, 5, 10);
 			i++;
 		}
+	}
+	
+	@Override
+    public String toString() {
+		return "RectangleBombs" + ";" + GetIntCount();
 	}
 }

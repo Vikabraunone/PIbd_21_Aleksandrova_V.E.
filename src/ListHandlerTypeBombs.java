@@ -26,11 +26,11 @@ public class ListHandlerTypeBombs extends TransferHandler {
 		try {
 			String line = (String) transferable.getTransferData(DataFlavor.stringFlavor);
 			if (line.equals("Круглые"))
-				WarPlaneConfigApplication.SetBombs(new CircleBombs());
+				WarPlaneConfigApplication.SetBombs(new CircleBombs(((Bombs)WarPlaneConfigApplication.GetBombs()).GetIntCount()));
 			else if (line.equals("Квадратные"))
-				WarPlaneConfigApplication.SetBombs(new SquareBombs());
+				WarPlaneConfigApplication.SetBombs(new SquareBombs(((Bombs)WarPlaneConfigApplication.GetBombs()).GetIntCount()));
 			else if (line.equals("Прямоугольные"))
-				WarPlaneConfigApplication.SetBombs(new RectangleBombs());
+				WarPlaneConfigApplication.SetBombs(new RectangleBombs(((Bombs)WarPlaneConfigApplication.GetBombs()).GetIntCount()));
 			WarPlaneConfigApplication.GetPanelWarPlane().repaint();
 			WarPlaneConfigApplication.ClearIndexJLists();
 			return true;

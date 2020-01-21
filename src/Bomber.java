@@ -8,6 +8,28 @@ public class Bomber extends WarPlane {
 	private boolean _isEmblem;
 	private IBombs _bombs;
 
+	public Bomber(String info)
+    {
+		super(info);
+        String[] strs = info.split(";");
+        if (strs.length == 9)
+        {
+        	SetMaxSpeed(Integer.parseInt (strs[0]));
+    		SetWeight(Float.parseFloat(strs[1]));
+    		SetMainColor(new Color(Integer.parseInt(strs[2])));
+    		SetDopColor(new Color(Integer.parseInt(strs[3])));
+    		SetSpire(Boolean.parseBoolean(strs[4]));
+    		SetEmblem(Boolean.parseBoolean(strs[5]));
+    		SetTrueBombs(Boolean.parseBoolean(strs[6]));
+    		if (strs[7].equals("CircleBombs"))
+    			_bombs = new CircleBombs(Integer.parseInt(strs[8]));
+    		else if (strs[7].equals("SquareBombs"))
+    			_bombs = new SquareBombs(Integer.parseInt(strs[8]));
+    		else
+    			_bombs = new RectangleBombs(Integer.parseInt(strs[8]));
+        }
+    }
+	
 	public Bomber(int maxSpeed, float weight, Color mainColor, Color dopColor, boolean isSpire, boolean isBombs,
 			boolean isEmblem, IBombs bombs) {
 		super(maxSpeed, weight, mainColor);
@@ -42,11 +64,11 @@ public class Bomber extends WarPlane {
 		return _isSpire;
 	}
 
-	public void Bombs(boolean bombs) {
+	public void SetTrueBombs(boolean bombs) {
 		_isBombs = bombs;
 	}
 
-	public boolean Bombs() {
+	public boolean GetTrueBombs() {
 		return _isBombs;
 	}
 
@@ -78,4 +100,9 @@ public class Bomber extends WarPlane {
 			_bombs.DrawBombs(g, ((Bombs) _bombs).GetCount(), GetDopColor());
 		}
 	}
+	
+	@Override
+    public String toString() {
+        return super.toString()  + ";" + GetDopColor().getRGB() + ";" + GetSpire() + ";" + GetTrueBombs() + ";" + GetEmblem() + ";" + _bombs.toString();
+    }
 }
