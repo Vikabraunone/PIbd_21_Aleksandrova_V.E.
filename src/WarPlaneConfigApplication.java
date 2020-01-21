@@ -256,12 +256,17 @@ public class WarPlaneConfigApplication {
 		JButton buttonAdd = new JButton("\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C");
 		buttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (warPlane != null) {
-					hangar.GetHangar(jListLevels.getSelectedIndex()).operatorAdd(warPlane);
-					panelWarPlane.SetWarPlane(warPlane);
-					panelHangar.repaint();
-				}
-				frame.dispose();
+				try {
+					if (warPlane != null) {
+						hangar.GetHangar(jListLevels.getSelectedIndex()).operatorAdd(warPlane);
+						panelWarPlane.SetWarPlane(warPlane);
+						panelHangar.repaint();
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "На этом уровне нет свободных мест");
+				} finally {
+					frame.dispose();
+				};
 			}
 		});
 		buttonAdd.setBounds(10, 127, 104, 23);

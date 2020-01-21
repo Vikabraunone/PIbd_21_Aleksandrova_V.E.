@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MultiLevelHangar {
@@ -36,7 +35,7 @@ public class MultiLevelHangar {
 		return null;
 	}
 	
-	public boolean SaveFile(File file)
+	public boolean SaveFile(File file) throws Exception
     {
 		try {
 			if (file.exists())
@@ -51,11 +50,11 @@ public class MultiLevelHangar {
 			fw.close();
 			return true;
 		} catch (Exception ex) {
-			return false;
+			throw new Exception();
 		}
     }
 	
-	public boolean SaveLevelFile(File file, int level)
+	public boolean SaveLevelFile(File file, int level) throws Exception
     {
 		try {
 			if (file.exists())
@@ -67,11 +66,11 @@ public class MultiLevelHangar {
 			fw.close();
 			return true;
 		} catch (Exception ex) {
-			return false;
+			throw new Exception();
 		}
     }
 	
-	public void SaveLevel(Hangar<ITransport, IBombs> hangar, FileWriter fw)
+	public void SaveLevel(Hangar<ITransport, IBombs> hangar, FileWriter fw) throws Exception
     {
 		try {
 			for (int i = 0; i < countPlaces; i++) {
@@ -84,11 +83,12 @@ public class MultiLevelHangar {
 					fw.append(plane + System.lineSeparator());
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
+			throw new Exception();
 		}
     }
 
-	public boolean LoadData(File file)
+	public boolean LoadData(File file) throws Exception
     {
 		if (!file.exists())
 			return false;
@@ -102,7 +102,7 @@ public class MultiLevelHangar {
 				countLevels = Integer.parseInt(line.split(":")[1]);
 				hangarStages = new ArrayList<Hangar<ITransport, IBombs>>(countLevels);
 			} else
-				return false;
+				throw new Exception();
 			while ((line = reader.readLine()) != null) {
 				line.replace("\r", "");
 				if (line.equals("Level")) {
@@ -115,11 +115,11 @@ public class MultiLevelHangar {
 			fr.close();
 			return true;
 		} catch (Exception ex) {
-			return false;
+			throw new Exception();
 		}
     }
 
-	public boolean LoadLevelData(File file) {
+	public boolean LoadLevelData(File file) throws Exception {
 		if (!file.exists())
 			return false;
 		int level = -1;
@@ -128,14 +128,14 @@ public class MultiLevelHangar {
 			BufferedReader reader = new BufferedReader(fr);
 			String line = reader.readLine();
 			if (line.contains("Level")) {
-				level = Integer.parseInt(line.split(":")[1]);
+				level = Integer.parseInt(line.split(":")[1]) - 1;
 				hangarStages.set(level, new Hangar<ITransport, IBombs>(countPlaces, pictureWidth, pictureHeight));
 			}
 			while ((line = reader.readLine()) != null)
 				LoadLine(hangarStages.get(level), line);
 			return true;
 		} catch (Exception ex) {
-			return false;
+			throw new Exception();
 		}
 	}
 

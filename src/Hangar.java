@@ -25,9 +25,9 @@ public class Hangar <T extends ITransport, V extends IBombs>{
 		return _places.get(indexTransport);
 	}
     
-	public int operatorAdd(T warPlane) {
+	public int operatorAdd(T warPlane) throws Exception {
 		if (_places.size() == _maxCount)
-			return -1;
+			throw new Exception();
 		for (int i = 0; i < _maxCount; i++)
 			if (CheckFreePlace(i)) 
 			{
@@ -36,10 +36,10 @@ public class Hangar <T extends ITransport, V extends IBombs>{
 				_places.put(i, warPlane);
 				return i;
 			}
-		return -1;
+		throw new Exception();
 	}
 
-	public T operatorSub(int index)
+	public T operatorSub(int index) throws Exception
     {
 		 if (!CheckFreePlace(index))
          {
@@ -47,13 +47,11 @@ public class Hangar <T extends ITransport, V extends IBombs>{
              _places.remove(index);
              return warPlane;
          }
-         return null;
+		 throw new Exception();
     }
 	
 	public int operatorMul(int index)
     {
-		if (_places.size() == _maxCount)
-			 return -1;
         if (!CheckFreePlace(index))
         {
             T warPlane = _places.get(index);
@@ -80,8 +78,6 @@ public class Hangar <T extends ITransport, V extends IBombs>{
 
 	public int operatorDiv(int index)
     {
-		if (_places.size() == _maxCount)
-			 return -1;
         if (!CheckFreePlace(index))
         {
             T warPlane = _places.get(index);

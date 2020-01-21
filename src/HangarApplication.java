@@ -20,10 +20,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class HangarApplication {
 	private JFrame frameHangar;
@@ -154,15 +154,19 @@ public class HangarApplication {
 		buttonGetWarPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textFieldPlace.getText().equals("")) {
-					warPlane = hangar.GetHangar(JListLevels.getSelectedIndex())
-							.operatorSub(Integer.parseInt(textFieldPlace.getText()));
-					if (warPlane != null) {
-						warPlane.SetPosition(10, 10, panelTakeWarPlane.getWidth(), panelTakeWarPlane.getHeight());
-						memoryArrayList.add(warPlane);
+					try {
+						warPlane = hangar.GetHangar(JListLevels.getSelectedIndex())
+								.operatorSub(Integer.parseInt(textFieldPlace.getText()));
+						if (warPlane != null) {
+							warPlane.SetPosition(10, 10, panelTakeWarPlane.getWidth(), panelTakeWarPlane.getHeight());
+							memoryArrayList.add(warPlane);
+						}
+						panelTakeWarPlane.SetWarPlane(warPlane);
+						panelTakeWarPlane.repaint();
+						panelHangar.repaint();
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Не найден самолет на месте " + Integer.parseInt(textFieldPlace.getText()));
 					}
-					panelTakeWarPlane.SetWarPlane(warPlane);
-					panelTakeWarPlane.repaint();
-					panelHangar.repaint();
 				}
 			}
 		});
@@ -200,23 +204,29 @@ public class HangarApplication {
 		loadMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileopen = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TXT", "*.*");
-				fileopen.setFileFilter(filter);
 				int ret = fileopen.showDialog(null, "Открыть файл");
 				if (ret == JFileChooser.APPROVE_OPTION)
-					hangar.LoadData(fileopen.getSelectedFile());
+					try {
+						hangar.LoadData(fileopen.getSelectedFile());
+						JOptionPane.showMessageDialog(null, "Загрузили игру");
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Не загрузили игру");
+					}
 				panelHangar.SetHangar(hangar.GetHangar(JListLevels.getSelectedIndex()));
 				panelHangar.repaint();
 			}
 		});
 		saveMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					JFileChooser fileopen = new JFileChooser();
-					FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TXT", "*.*");
-					fileopen.setFileFilter(filter);
-					int ret = fileopen.showDialog(null, "Сохранить файл");
-					if (ret == JFileChooser.APPROVE_OPTION)
+				JFileChooser fileopen = new JFileChooser();
+				int ret = fileopen.showDialog(null, "Сохранить файл");
+				if (ret == JFileChooser.APPROVE_OPTION)
+					try {
 						hangar.SaveFile(fileopen.getSelectedFile());
+						JOptionPane.showMessageDialog(null, "Сохранение прошло успешно");
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Не сохранилось");
+					}
 			}
 		});
 		loadLevelMenu.addActionListener(new ActionListener() {
@@ -224,7 +234,12 @@ public class HangarApplication {
 				JFileChooser fileopen = new JFileChooser();
 				int ret = fileopen.showDialog(null, "Открыть файл");
 				if (ret == JFileChooser.APPROVE_OPTION)
-					hangar.LoadLevelData(fileopen.getSelectedFile());
+					try {
+						hangar.LoadLevelData(fileopen.getSelectedFile());
+						JOptionPane.showMessageDialog(null, "Загрузили уровень");
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Не загрузили уровень");
+					}
 				panelHangar.SetHangar(hangar.GetHangar(JListLevels.getSelectedIndex()));
 				panelHangar.repaint();
 			}
@@ -236,7 +251,15 @@ public class HangarApplication {
 				if (ret == JFileChooser.APPROVE_OPTION) {
 					File file = fileopen.getSelectedFile();
 					file = new File(file.toString() + ".txt");
-					hangar.SaveLevelFile(file, JListLevels.getSelectedIndex());
+					try {
+						hangar.SaveLevelFile(file, JListLevels.getSelectedIndex());
+						JOptionPane.showMessageDialog(null,
+								"Сохранение уровня " + JListLevels.getSelectedIndex() + " прошло успешно");
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, ex.getMessage());
+						JOptionPane.showMessageDialog(null,
+								"Не удалось сохранить уровень " + JListLevels.getSelectedIndex());
+					}
 					panelHangar.SetHangar(hangar.GetHangar(JListLevels.getSelectedIndex()));
 					panelHangar.repaint();
 				}
