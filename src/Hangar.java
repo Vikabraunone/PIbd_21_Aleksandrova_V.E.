@@ -26,6 +26,10 @@ public class Hangar <T extends ITransport, V extends IBombs>{
         this.pictureWidth = pictureHeight;
         this.pictureHeight = pictureHeight;
     }
+	
+	public T GetTransport(int indexTransport){
+		return _places.get(indexTransport);
+	}
     
 	public int operatorAdd(T warPlane)
     {

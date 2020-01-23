@@ -104,42 +104,14 @@ public class HangarApplication {
 		buttonSetWarPlane.setLayout(new BorderLayout());
 		buttonSetWarPlane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				mainColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
-				warPlane = new WarPlane(100, 1000, mainColor);
-				warPlane.SetPosition(0, 0, panelTakeWarPlane.getWidth(), panelTakeWarPlane.getHeight());
-				hangar.GetHangar(JListLevels.getSelectedIndex()).operatorAdd(warPlane);
-				panelHangar.repaint();
+				WarPlaneConfigApplication configFrame = new WarPlaneConfigApplication();
+				configFrame.frame.setVisible(true);
+				configFrame.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				configFrame.initializeConfig(panelHangar, hangar, JListLevels);
 			}
 		});
 		buttonSetWarPlane.setBounds(865, 111, 200, 30);
 		frameHangar.getContentPane().add(buttonSetWarPlane);
-		JButton buttonSetBomber = new JButton();
-		buttonSetBomber.setText(
-				"\u041F\u043E\u0441\u0430\u0434\u0438\u0442\u044C \u0431\u043E\u043C\u0431\u0430\u0440\u0434\u0438\u0440\u043E\u0432\u0449\u0438\u043A");
-		buttonSetBomber.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
-				dopColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
-				int posX = rnd.nextInt(90) + 10;
-				int posY = rnd.nextInt(90) + 10;
-				int typeBombs = rnd.nextInt(3);
-				IBombs bombs;
-				if (typeBombs == 0)
-					bombs = new CircleBombs();
-				else if (typeBombs == 1)
-					bombs = new SquareBombs();
-				else
-					bombs = new RectangleBombs();
-				bombs.SetPosition(posX, posY);
-				warPlane = new Bomber(rnd.nextInt(200) + 100, rnd.nextInt(200) + 100, mainColor, dopColor, true, true,
-						true, bombs);
-				warPlane.SetPosition(0, 0, panelTakeWarPlane.getWidth(), panelTakeWarPlane.getHeight());
-				hangar.GetHangar(JListLevels.getSelectedIndex()).operatorAdd(warPlane);
-				panelHangar.repaint();
-			}
-		});
-		buttonSetBomber.setBounds(865, 141, 200, 30);
-		frameHangar.getContentPane().add(buttonSetBomber);
 		JButton buttonTurnBomber = new JButton();
 		buttonTurnBomber
 				.setText("\u0423\u043B\u0443\u0447\u0448\u0438\u0442\u044C \u0441\u0430\u043C\u043E\u043B\u0435\u0442");

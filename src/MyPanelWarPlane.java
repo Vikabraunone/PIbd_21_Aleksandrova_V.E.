@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 public class MyPanelWarPlane extends JPanel {
 	private ITransport warPlane = null;
-	
+  
 	public void SetWarPlane(ITransport warPlane) {
 		this.warPlane = warPlane;
 	}
